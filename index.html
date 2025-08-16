@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=5, viewport-fit=cover">
 <title>MohitCodes - Home</title>
 
 <!-- Bootstrap CSS -->
@@ -21,6 +21,7 @@ body {
   font-family: 'Segoe UI', sans-serif;
   margin: 0;
   padding: 0;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .navbar-brand {
@@ -74,6 +75,121 @@ body {
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
 }
 
+/* Navigation and buttons */
+.nav-link, .btn {
+  padding: 0.75rem 1rem;
+  min-height: 48px;
+}
+
+/* Footer */
+footer a {
+  transition: opacity 0.2s ease;
+}
+footer a:hover {
+  opacity: 0.8;
+  text-decoration: none;
+}
+
+/* Mobile Navigation Styles */
+@media (max-width: 992px) {
+  .navbar-collapse {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    max-width: 300px;
+    height: 100vh;
+    background-color: white;
+    z-index: 1050;
+    padding: 20px;
+    transition: right 0.3s ease-in-out;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+  }
+  
+  .navbar-collapse.show {
+    right: 0;
+  }
+  
+  .navbar-toggler {
+    z-index: 1060;
+    position: relative;
+    border: none;
+    padding: 0.5rem;
+    background: transparent;
+  }
+  
+  .navbar-toggler .navbar-toggler-icon {
+    background-image: none;
+    position: relative;
+    width: 24px;
+    height: 24px;
+    transition: all 0.3s ease;
+  }
+  
+  .navbar-toggler .navbar-toggler-icon::before,
+  .navbar-toggler .navbar-toggler-icon::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #333;
+    transition: all 0.3s ease;
+  }
+  
+  .navbar-toggler .navbar-toggler-icon::before {
+    top: 6px;
+  }
+  
+  .navbar-toggler .navbar-toggler-icon::after {
+    bottom: 6px;
+  }
+  
+  /* Transform to X when menu is open */
+  .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+    background: transparent;
+  }
+  
+  .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before {
+    transform: rotate(45deg);
+    top: 11px;
+  }
+  
+  .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::after {
+    transform: rotate(-45deg);
+    bottom: 11px;
+  }
+  
+  /* Overlay when menu is open */
+  .navbar-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1040;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  
+  .navbar-backdrop.show {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  /* Adjust navbar items for mobile */
+  .navbar-nav {
+    margin-top: 40px;
+  }
+  
+  .navbar-nav .nav-item {
+    margin-bottom: 15px;
+  }
+}
+
 /* Fully responsive adjustments */
 @media (max-width: 992px) {
   .hero {
@@ -82,6 +198,22 @@ body {
   .hero h1 { font-size: 2.5rem; }
   .hero h4 { font-size: 1.5rem; }
   .hero p { font-size: 1rem; }
+  
+  /* Stack form elements vertically on mobile */
+  .navbar .d-flex {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .navbar .form-control {
+    margin-right: 0 !important;
+    margin-bottom: 0.5rem;
+  }
+  
+  .navbar .btn {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
 }
 @media (max-width: 768px) {
   .hero {
@@ -92,16 +224,39 @@ body {
   .hero p { font-size: 0.95rem; }
   .feature-card i { font-size: 2rem; }
   .feature-card h5 { font-size: 1rem; }
-  .navbar-nav {
+  
+  /* Stack footer columns */
+  footer .col-md-4 {
+    margin-bottom: 2rem;
     text-align: center;
   }
-  .navbar-nav .nav-item { margin-bottom: 5px; }
+  footer .d-flex {
+    justify-content: center;
+  }
 }
 @media (max-width: 576px) {
-  .hero h1 { font-size: 1.6rem; }
-  .hero h4 { font-size: 1rem; }
-  .hero p { font-size: 0.9rem; }
-  .feature-card { padding: 20px; }
+  .hero {
+    padding: 60px 10px;
+  }
+  .hero h1 { 
+    font-size: 1.8rem;
+    line-height: 1.3;
+  }
+  .hero h4 { 
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  .hero p { 
+    font-size: 0.9rem;
+    margin-top: 1rem;
+  }
+  .badge {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.5rem;
+  }
+  .feature-card { 
+    padding: 20px;
+  }
 }
 </style>
 </head>
@@ -110,9 +265,13 @@ body {
 <!-- Header Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm px-3">
   <a class="navbar-brand" href="#"><i class="fas fa-code"></i> MohitCodes❤️</a>
-  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+  <button class="navbar-toggler" type="button" id="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
+  
+  <!-- Backdrop for mobile menu -->
+  <div class="navbar-backdrop"></div>
+  
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
       <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-home"></i> Home</a></li>
@@ -135,7 +294,7 @@ body {
   <span class="badge bg-light text-dark px-3 py-2 mb-3">Learn coding the right way</span>
   <h1>Welcome to <span class="text-primary">MohitCodes</span></h1>
   <h4 class="text-secondary mb-4">Learn Machine Learning | Web Development | More</h4>
-  Mohit <span id="element"></span>
+  <p>Mohit <span id="element"></span></p>
   <p class="lead">
     Confused about which course to take? We've got you covered! Browse courses and discover the best option for you.
     It's free! This is my effort to teach the basics and advanced coding techniques in a short time that took me years to master.
@@ -193,6 +352,7 @@ body {
     </div>
   </div>
 </section>
+
 <!-- Footer Section -->
 <footer class="bg-dark text-light pt-5 pb-3 mt-5">
   <div class="container">
@@ -234,7 +394,6 @@ body {
   </div>
 </footer>
 
-
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -247,10 +406,7 @@ var typed = new Typed('#element', {
   backSpeed: 30,
   loop: true
 });
-</script>
 
-<!-- Festival Background Changer with Fade -->
-<script>
 const festivalBackgrounds = {
   durga: "https://images.unsplash.com/photo-1600959907703-0c38de362f63?auto=format&fit=crop&w=1350&q=80",
   diwali: "https://images.unsplash.com/photo-1572955303710-bbe68a1c37c1?auto=format&fit=crop&w=1350&q=80",
@@ -282,11 +438,84 @@ function setFestivalBackground() {
   setTimeout(() => {
     hero.classList.add("loaded");
   }, 50);
+  
+  return bg;
 }
 
-setFestivalBackground();
+// Preload the correct background image
+function preloadFestivalBackground() {
+  const bg = setFestivalBackground();
+  const link = document.createElement('link');
+  link.rel = 'preload';
+  link.as = 'image';
+  link.href = bg;
+  document.head.appendChild(link);
+}
+
+// Enhanced mobile menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+  preloadFestivalBackground();
+  
+  const navbarToggler = document.getElementById('navbarToggler');
+  const navbarCollapse = document.querySelector('.navbar-collapse');
+  const navbarBackdrop = document.querySelector('.navbar-backdrop');
+  
+  // Function to close menu
+  function closeMenu() {
+    navbarToggler.setAttribute('aria-expanded', 'false');
+    navbarCollapse.classList.remove('show');
+    navbarBackdrop.classList.remove('show');
+    document.body.style.overflow = '';
+    // Reset to hamburger icon
+    navbarToggler.innerHTML = '<span class="navbar-toggler-icon"></span>';
+  }
+  
+  // Function to open menu
+  function openMenu() {
+    navbarToggler.setAttribute('aria-expanded', 'true');
+    navbarCollapse.classList.add('show');
+    navbarBackdrop.classList.add('show');
+    document.body.style.overflow = 'hidden';
+    // Change to X icon
+    navbarToggler.innerHTML = '<span class="navbar-toggler-icon close-icon"></span>';
+  }
+  
+  // Toggle menu on button click
+  navbarToggler.addEventListener('click', function(e) {
+    e.stopPropagation();
+    const isExpanded = this.getAttribute('aria-expanded') === 'true';
+    if (isExpanded) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  });
+  
+  // Close menu when clicking on backdrop
+  navbarBackdrop.addEventListener('click', closeMenu);
+  
+  // Close menu when clicking on nav links
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', closeMenu);
+  });
+  
+  // Close menu when clicking outside (for larger screens)
+  document.addEventListener('click', function(event) {
+    if (!navbarCollapse.contains(event.target) && 
+        !navbarToggler.contains(event.target) &&
+        navbarCollapse.classList.contains('show')) {
+      closeMenu();
+    }
+  });
+  
+  // Close menu on escape key press
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape' && navbarCollapse.classList.contains('show')) {
+      closeMenu();
+    }
+  });
+});
 </script>
 
 </body>
 </html>
-
